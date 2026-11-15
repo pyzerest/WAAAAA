@@ -44,4 +44,33 @@ const WEAPONS = {
 		"new": "Drift fast to drop proximity mines",
 		"up": "Bigger boom, more mines",
 	},
+	# ---- ricochet / bounce-back weapons ----
+	"boomerang": {
+		"name": "Boomerang",
+		"script": preload("res://weapons/boomerang.gd"),
+		"max_level": 8,
+		"new": "Ricochets off walls, then flies back to you",
+		"up": "More boomerangs, longer throws",
+	},
+	"pinball": {
+		"name": "Pinball",
+		"script": preload("res://weapons/pinball.gd"),
+		"max_level": 8,
+		"new": "Steel balls bounce off walls AND enemies",
+		"up": "More balls, they last longer",
+	},
+	"scatter": {
+		"name": "Scatter Shot",
+		"script": preload("res://weapons/scatter_shot.gd"),
+		"max_level": 8,
+		"new": "Fires a spread of pellets that ricochet",
+		"up": "+1 pellet, more bounces",
+	},
+	"rebound": {
+		"name": "Rebound Burst",
+		"script": preload("res://weapons/rebound_burst.gd"),
+		"max_level": 8,
+		"new": "Wall-bouncing blasts out ricochet shards",
+		"up": "+2 shards, more damage",
+	},
 }

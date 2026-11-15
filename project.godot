@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="v5"
+config/name="v6"
 run/main_scene="uid://cquxo2cp0bdq2"
 config/features=PackedStringArray("4.7", "Mobile")
 

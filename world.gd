@@ -55,6 +55,7 @@ func _ready() -> void:
 	player.died.connect(_on_player_died)
 	player.stats_changed.connect(update_hud)
 	upgrade_menu.upgrade_chosen.connect(_on_upgrade_chosen)
+	weapons_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART   # lots of weapons = wrap onto a 2nd line
 	if not tutorial.holding_waves():
 		start_next_wave()   # otherwise the tutorial starts wave 1 once you've learned the basics
 
