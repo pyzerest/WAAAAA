@@ -72,9 +72,10 @@ func _physics_process(delta: float) -> void:
 				r["hit"] = {}               # can hit the same enemies again on the way back
 		else:
 			var to_player: Vector2 = (player.global_position - r["pos"]).normalized()
-			r["vel"] = r["vel"].move_toward(to_player * return_speed, return_accel * delta)
+			var chase: float = max(return_speed, player.velocity.length() + 250.0)   # keeps up with you at any speed
+			r["vel"] = r["vel"].move_toward(to_player * chase, max(return_accel, chase * 3.0) * delta)
 			r["pos"] += r["vel"] * delta
-			if r["pos"].distance_to(player.global_position) < 24.0 or r["age"] > 6.0:
+			if r["pos"].distance_to(player.global_position) < 24.0 + chase * delta or r["age"] > 6.0:
 				rangs.remove_at(i)
 				continue
 		hit_enemies(r, delta)

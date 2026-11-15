@@ -34,8 +34,10 @@ func _physics_process(delta: float) -> void:
 
 	if returning:
 		# fly back to the player, ignoring walls
+		# always faster than you, so it can catch up even at crazy speeds
+		var chase: float = max(return_speed, thrower.velocity.length() + 300.0)
 		var to_player: Vector2 = (thrower.global_position - global_position).normalized()
-		velocity = velocity.move_toward(to_player * return_speed, return_accel * delta)
+		velocity = velocity.move_toward(to_player * chase, max(return_accel, chase * 3.5) * delta)
 		global_position += velocity * delta
 	else:
 		var collision := move_and_collide(velocity * delta)
@@ -50,6 +52,7 @@ func _physics_process(delta: float) -> void:
 
 	# catch it by touching it
 	var can_catch := returning or not catch_only_when_returning
-	if can_catch and catch_delay <= 0.0 and global_position.distance_to(thrower.global_position) < catch_radius:
+	var reach: float = catch_radius + (velocity.length() + thrower.velocity.length()) * delta   # don't fly past at high speed
+	if can_catch and catch_delay <= 0.0 and global_position.distance_to(thrower.global_position) < reach:
 		caught.emit()
 		queue_free()

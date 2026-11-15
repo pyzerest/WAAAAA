@@ -7,10 +7,12 @@ signal bounced         # did a wall bounce (the tutorial listens for this)
 const WeaponList = preload("res://weapons/weapon_list.gd")
 
 # oh yeah its mr driftin it
-@export var max_speed = 500.0
-@export var speeeeee = 1300.0       # acceleration (px/s²)
+# There is NO top speed. You shoot up to cruise speed (max_speed) fast, and past
+# that, holding forward keeps adding speed forever - just slower (overdrive).
+@export var max_speed = 650.0       # cruise speed: where the quick acceleration stops
+@export var speeeeee = 1700.0       # acceleration (px/s²) below cruise speed, and for steering/braking
+@export var overdrive = 700.0       # forward acceleration past cruise speed (friction eats 400 of it)
 @export var friction = 400.0
-@export var slow_tf_down = 950.0    # must stay bigger than (speeeeee - friction) = 900
 
 # ADAMS BOUNCING ON IT
 @export var wall_bounce = 350.0
@@ -23,7 +25,7 @@ const WeaponList = preload("res://weapons/weapon_list.gd")
 @export var invincible_time = 0.6
 
 # Ramming: drive into an enemy fast enough and IT takes the damage, not you
-@export var ram_speed = 430.0       # how fast you must be going to dash-kill (max_speed is 500)
+@export var ram_speed = 560.0       # how fast you must be going to dash-kill (cruise speed is 650)
 @export var ram_damage = 2          # +1 more for every 100 px/s above ram_speed
 @export var ram_knockback = 450.0
 @export var ram_grace = 0.3         # seconds you stay safe right after a ram (you slow down on impact)
@@ -60,12 +62,18 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_vector("democratic", "conservative", "were going up up up its our moment", "hell")
 
-	# Drift movement
-	velocity += direction * speeeeee * delta
+	# Drift movement (no speed cap!)
+	var thrust: Vector2 = direction * speeeeee
+	var speed: float = velocity.length()
+	if speed > max_speed:
+		# past cruise speed, only the part of your push that's straight ahead gets weaker -
+		# steering and braking keep full strength, so you can still drift at any speed
+		var heading: Vector2 = velocity / speed
+		var forward: float = thrust.dot(heading)
+		if forward > 0.0:
+			thrust -= heading * forward * (1.0 - overdrive / speeeeee)
+	velocity += thrust * delta
 	velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
-
-	if velocity.length() > max_speed:
-		velocity = velocity.move_toward(velocity.limit_length(max_speed), slow_tf_down * delta)
 
 	# Wall bounce (blocked if you're pushing into the wall)
 	wall_timer -= delta

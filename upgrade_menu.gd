@@ -11,7 +11,7 @@ var upgrades = [
 	{"id": "damage",    "name": "Sharp Edge",   "desc": "+1 disk damage"},
 	{"id": "dspeed",    "name": "Fastball",     "desc": "+120 disk speed"},
 	{"id": "inherit",   "name": "Momentum",     "desc": "Throws carry more of your speed"},
-	{"id": "speed",     "name": "Zoomies",      "desc": "+40 max speed"},
+	{"id": "speed",     "name": "Zoomies",      "desc": "+50 cruise speed, build speed faster"},
 	{"id": "wall",      "name": "Bouncier",     "desc": "+75 wall bounce"},
 	{"id": "health",    "name": "Thick Skin",   "desc": "+1 max HP, full heal"},
 	{"id": "ram",       "name": "Battering Ram", "desc": "+1 ram damage, ram at lower speed"},
@@ -107,7 +107,8 @@ func apply_upgrade(id: String) -> void:
 		"inherit":
 			p.disk_inherit += 0.25
 		"speed":
-			p.max_speed += 40
+			p.max_speed += 50
+			p.overdrive += 100
 		"wall":
 			p.wall_bounce += 75
 		"health":
@@ -115,7 +116,7 @@ func apply_upgrade(id: String) -> void:
 			p.health = p.max_health
 		"ram":
 			p.ram_damage += 1
-			p.ram_speed = max(300.0, p.ram_speed - 30.0)
+			p.ram_speed = max(450.0, p.ram_speed - 30.0)
 		"overcharge":
 			p.weapon_damage_bonus += 1
 	p.stats_changed.emit()  # refresh the HUD

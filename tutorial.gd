@@ -40,7 +40,7 @@ func _ready() -> void:
 	var cfg := ConfigFile.new()
 	if cfg.load(SAVE_PATH) == OK:
 		step = cfg.get_value("tutorial", "step", 0)
-	finished = step >= steps.size()
+	finished = step >= steps.size() or Game.is_speedrun()   # no tutorial in speedrun mode
 
 	tip = make_label(26, -130.0)
 	hint = make_label(14, -84.0)
@@ -135,7 +135,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		show_step()
 		if world.wave == 0:
 			world.start_next_wave()
-	elif event.keycode == KEY_F1:
+	elif event.keycode == KEY_F1 and not Game.is_speedrun():
 		step = 0
 		save_progress()
 		get_tree().paused = false

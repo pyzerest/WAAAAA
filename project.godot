@@ -10,9 +10,13 @@ config_version=5
 
 [application]
 
-config/name="v6"
-run/main_scene="uid://cquxo2cp0bdq2"
+config/name="v7"
+run/main_scene="res://title.tscn"
 config/features=PackedStringArray("4.7", "Mobile")
+
+[autoload]
+
+Game="*res://game_state.gd"
 
 [display]
 
