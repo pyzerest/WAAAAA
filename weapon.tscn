@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://ddv6l8i1c2cil"]
+
+[ext_resource type="Script" path="res://disk.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://ci66io7ywilj2" path="res://Screenshot 2026-11-15 101357 (1).png" id="1_swcir"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tnw64"]
+
+[node name="Disk" type="CharacterBody2D" unique_id=440168608]
+collision_layer = 8
+collision_mask = 5
+motion_mode = 1
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1888217697]
+shape = SubResource("CircleShape2D_tnw64")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1563533560]
+position = Vector2(1, 1)
+scale = Vector2(0.05277317, 0.053841993)
+texture = ExtResource("1_swcir")
