@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://enemy.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://pentagon_boi.png" id="2_tex"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_boss"]
+radius = 20.0
+
+[node name="Pentagon" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 3
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_script")
+speed = 115.0
+accel = 300.0
+max_health = 45
+xp_value = 30
+contact_damage = 2
+separation_radius = 50.0
+knockback_resist = 0.6
+is_boss = true
+boss_name = "PENTAGON"
+spin = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_boss")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.21, 0.21)
+texture = ExtResource("2_tex")
